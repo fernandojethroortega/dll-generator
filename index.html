@@ -2,26 +2,154 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PIS DLL Generator</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Generated Daily Lesson Log</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    main {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+      background-color: white;
+      margin-top: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, textarea, select, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    h2 {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .dll-output {
+      margin-top: 30px;
+      background-color: #f0f0f0;
+      padding: 20px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>AI Generated Daily Lesson Log (DLL)</h1>
+  </header>
+  <main>
+    <form id="dllForm">
+      <label for="subject">Subject:</label>
+      <input type="text" id="subject" required>
 
-<h1>AI Daily Lesson Log Generator</h1>
-<p>Enter your lesson information, and a full DepEd/PPST-aligned lesson will be generated automatically.</p>
+      <label for="grade">Grade Level:</label>
+      <input type="text" id="grade" required>
 
-<section>
-  <input type="text" id="subject" placeholder="Subject"><br>
-  <input type="text" id="grade" placeholder="Grade Level"><br>
-  <input type="datetime-local" id="datetime"><br>
-  <textarea id="objectives" placeholder="Learning Objectives / Competencies"></textarea><br>
-  <textarea id="keywords" placeholder="Optional Keywords (for AI lesson focus)"></textarea><br>
-  <button onclick="generateLesson()">Generate Lesson</button>
-</section>
+      <label for="date">Date:</label>
+      <input type="date" id="date" required>
 
-<hr>
-<div id="output"></div>
+      <label for="time">Time:</label>
+      <input type="time" id="time" required>
 
-<script src="script.js"></script>
+      <label for="contentStandards">Content Standards:</label>
+      <textarea id="contentStandards" rows="2" required></textarea>
+
+      <label for="performanceStandards">Performance Standards:</label>
+      <textarea id="performanceStandards" rows="2" required></textarea>
+
+      <label for="objectives">Learning Objectives / Competencies:</label>
+      <textarea id="objectives" rows="3" required></textarea>
+
+      <label for="references">References:</label>
+      <textarea id="references" rows="2" placeholder="Provide sources or textbooks" required></textarea>
+
+      <button type="button" onclick="generateDLL()">Generate DLL</button>
+    </form>
+
+    <h2>Generated Daily Lesson Log</h2>
+    <div class="dll-output" id="dllOutput"></div>
+  </main>
+
+  <script>
+    function generateProcedures(subject, grade) {
+      const steps = [
+        `1. Review previous lesson from ${subject} and assess understanding through quick questions.`,
+        `2. Introduce new concepts relevant to ${subject} for Grade ${grade}.`,
+        `3. Demonstrate key examples and engage students in hands-on activities.`,
+        `4. Allow students to practice with guided exercises and collaborative work.`,
+        `5. Summarize lesson and highlight important points.`,
+        `6. Assign homework or additional exercises to reinforce the lesson.`
+      ];
+      return steps.join('\n');
+    }
+
+    function generateDLL() {
+      const subject = document.getElementById('subject').value;
+      const grade = document.getElementById('grade').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const contentStandards = document.getElementById('contentStandards').value;
+      const performanceStandards = document.getElementById('performanceStandards').value;
+      const objectives = document.getElementById('objectives').value;
+      const references = document.getElementById('references').value;
+
+      const procedures = generateProcedures(subject, grade);
+
+      const dll = `
+Daily Lesson Log
+===============================
+
+Subject: ${subject}
+Grade Level: ${grade}
+Date: ${date}
+Time: ${time}
+
+Content Standards:
+${contentStandards}
+
+Performance Standards:
+${performanceStandards}
+
+Learning Objectives / Competencies:
+${objectives}
+
+Procedures:
+${procedures}
+
+References:
+${references}
+      `;
+
+      document.getElementById('dllOutput').textContent = dll;
+    }
+  </script>
 </body>
 </html>
